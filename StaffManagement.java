@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.sql.SQLException;
 
 public class StaffManagement {
-    static Logger logger = Logger.getLogger(MainHRM.class.getName());
+    static Logger logger = Logger.getLogger(StaffManagement.class.getName());
     private static Company company = new Company();
     static final String mysqlURL = "jdbc:mysql://localhost:3306/employee?useUnicode=true&useJDBC"
                                  + "CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -23,7 +23,6 @@ public class StaffManagement {
         logger.addHandler(handler); 
         // ƒƒOƒŒƒxƒ‹‚Ìİ’è
         logger.setLevel(Level.FINER);
-        
         System.out.println("]‹ÆˆõID‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
         String userID = new java.util.Scanner(System.in).nextLine();
         System.out.println("ƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -32,12 +31,10 @@ public class StaffManagement {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             Connection conn = DriverManager.getConnection(mysqlURL,userID,password);
             Statement stmt = conn.createStatement();
-            if(company.Login(stmt) == true){
-                if(company.Authority(userID,stmt) == true){
-                    managerMenu(stmt);
-                }else{
-                	userMenu(stmt);
-                }
+            if(company.Authority(userID,stmt) == true){
+                managerMenu(stmt);
+            }else{
+            	userMenu(stmt);
             }
             stmt.close();
         }catch (Exception e){
@@ -45,7 +42,9 @@ public class StaffManagement {
         }
     }
     
-    //ƒƒjƒ…[‘I‘ğ
+    /**
+    * ŠÇ—Ò‚Ìƒƒjƒ…[
+    */
     public static void managerMenu(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exid = 0;
@@ -71,7 +70,6 @@ public class StaffManagement {
                     updateStaff(stmt);
                     break;
                 case 4:
-                    System.out.println("]‹Æˆõˆê——");
                     company.employeeView(stmt);
                     break;
                 case 5:
@@ -91,7 +89,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //ƒƒjƒ…[‘I‘ğ
+    /**
+    * ]‹Æˆõ‚Ìƒƒjƒ…[
+    */
     public static void userMenu(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exid = 0;
@@ -125,7 +125,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
 
-    //]‹Æˆõ‚Ì“o˜^
+    /**
+    * ]‹Æˆõ‚Ì“o˜^
+    */
     public static void addStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         Staff data = new Staff(inputID(),inputName(),inputGender(),inputBirth(),inputPosition(),inputAssignment(),
@@ -134,7 +136,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //]‹ÆˆõID‚Ì“ü—Í
+    /**
+    * ]‹ÆˆõID‚Ì“ü—Í
+    */
     public static int inputID(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("]‹ÆˆõID‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -143,7 +147,9 @@ public class StaffManagement {
         return emp_id;
     }
     
-    //]‹Æˆõ–¼‚Ì“ü—Í
+    /**
+    * ]‹Æˆõ–¼‚Ì“ü—Í
+    */
     public static String inputName(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("]‹Æˆõ–¼‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -152,7 +158,10 @@ public class StaffManagement {
         return emp_name;
     }
     
-    //«•Ê‚Ì“ü—Í
+    /**
+    * «•Ê‚Ì“ü—Í
+    */
+   
     public static char inputGender(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("«•Ê‚ğMi’j«jAFi—«jAXi‚»‚Ì‘¼j‚©‚ç‘I‘ğ‚µ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -162,7 +171,9 @@ public class StaffManagement {
         return emp_gender;
     }
     
-    //¶”NŒ“ú‚Ì“ü—Í
+    /**
+    * ¶”NŒ“ú‚Ì“ü—Í
+    */
     public static Date inputBirth(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         boolean dateCheck = false;
@@ -183,7 +194,9 @@ public class StaffManagement {
         return Birth;
     }
     
-    //–ğE‚Ì“ü—Í
+    /**
+    * –ğE‚Ì“ü—Í
+    */
     public static String inputPosition(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("–ğE‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -192,7 +205,9 @@ public class StaffManagement {
         return position;
     }
     
-    //Š‘®‚Ì“ü—Í
+    /**
+    * Š‘®‚Ì“ü—Í
+    */
     public static String inputAssignment(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("Š‘®‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -201,7 +216,9 @@ public class StaffManagement {
         return assignment;
     }
     
-    //‹Î–±”N”‚Ì“ü—Í
+    /**
+    * ‹Î–±”N”‚Ì“ü—Í
+    */
     public static int inputYearsWorked(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("‹Î–±”N”‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -210,7 +227,9 @@ public class StaffManagement {
         return yearsWorked;
     }
     
-    //‘Ši‚Ì“ü—Í
+    /**
+    * ‘Ši‚Ì“ü—Í
+    */
     public static List<String> inputCertificate(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int i=0;
@@ -229,7 +248,9 @@ public class StaffManagement {
         return certificate;
     }
     
-    //Ü”±‚Ì“ü—Í
+    /**
+    * Ü”±‚Ì“ü—Í
+    */
     public static List<String> inputAwardsPunishments(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int i=0;
@@ -248,7 +269,9 @@ public class StaffManagement {
         return awardsPunishments;
     }
     
-    //g—pŒ¾Œê‚Ì“ü—Í
+    /**
+    * g—pŒ¾Œê‚Ì“ü—Í
+    */
     public static String inputProgrammingLanguage(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("g—pŒ¾Œê‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -257,7 +280,9 @@ public class StaffManagement {
         return programmingLanguage;
     }
     
-    //]‹Æˆõ‚Ìíœ
+    /**
+    * ]‹Æˆõ‚Ìíœ
+    */
     public static void deleteStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("íœ‚·‚é]‹Æˆõ‚ÌID‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -266,7 +291,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //]‹Æˆõ‚ÌXV
+    /**
+    * ]‹Æˆõ‚ÌXV
+    */
     public static void updateStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         boolean exist = false;
@@ -278,7 +305,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
 
-    //]‹Æˆõ‚ÌŒŸõ
+    /**
+    * ]‹Æˆõ‚ÌŒŸõ
+    */
     public static void searchStaffs(Statement stmt)throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("ŒŸõ‚·‚é]‹Æˆõ‚Ì€–Ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
