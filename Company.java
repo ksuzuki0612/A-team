@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 public class Company {
     static Logger logger = Logger.getLogger(Company.class.getName());
     
-    //従業員の登録
+    /**
+    *従業員の登録
+    */
     public void addStaff(Staff staff,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -48,7 +50,9 @@ public class Company {
         return query;
     }
     
-    //従業員の削除
+    /**
+    *従業員の削除
+    */
     public void deleteStaff(int delete,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try{
@@ -64,7 +68,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //従業員の更新
+    /**
+    *従業員の更新
+    */
     public void updateStaff(int updateID,Staff staff,Statement stmt) {
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -89,7 +95,10 @@ public class Company {
         }
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
-    
+	
+    /**
+    従業員一覧
+    */
     public static void employeeView(Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -109,7 +118,10 @@ public class Company {
         }
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
-    
+   
+    /**
+    *個人情報一覧
+    */
     public static void informationView(Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -129,6 +141,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *アサインメント状況一覧
+    */
     public static void assignmentView(Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -148,6 +163,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+　　/**
+    *従業員IDで検索
+    */
     public void searchByEmp_id(int emp_id,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -166,6 +184,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *従業員名で検索
+    */
     public void searchByEmp_name(String emp_name,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -184,6 +205,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *性別で検索
+    */
     public void searchByEmp_gender(char emp_gender,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -202,6 +226,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+　　/**
+    *誕生日で検索
+    */
     public void searchByBirth(String birth,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -220,6 +247,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *役職で検索
+    */
     public void searchByPosition(String position,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -238,6 +268,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *アサインメントで検索
+    */
     public void searchByAssignment(String assignment,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -256,6 +289,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *勤務年数で検索
+    */
     public void searchByYearsWorked(int yearsWorked,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -274,6 +310,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+　　 /**
+    *資格で検索
+    */
     public void searchByCertificate(String certificate,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -295,6 +334,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+　　/**
+    *賞罰で検索
+    */
     public void searchByAwardsPunishments(String awardsPunishments,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -316,6 +358,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+　　/**
+    *プログラミング言語で検索
+    */
     public void searchByProgrammingLanguage(String programmingLanguage,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -333,7 +378,7 @@ public class Company {
         }
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
-    
+  
     public void exitID(int emp_id,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exitID = 0;
@@ -359,6 +404,9 @@ public class Company {
         return login;
     }
     
+　　/**
+    *権限の有無
+    */
     public boolean Authority(String userID, Statement stmt) throws Exception{
     	boolean authority = false;
     	try {
