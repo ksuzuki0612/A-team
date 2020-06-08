@@ -1,17 +1,20 @@
 import java.util.*;
     
 public class Staff {
-	private int emp_id;				//]‹Æˆõid
-	private String emp_name;		//–¼‘O
-	private char emp_gender;		//«•Ê
-	private Date birth;		//’a¶“ú
-	private String position;	//–ğE
-	private String assignment;		//Š‘®
-	private int yearsWorked;	//‹Î–±”N”
-	private List<String> certificate; //‘Ši
-	private List<String> awardsPunishments;	//Ü”±
-	private String programmingLanguage;	//g—pŒ¾Œê
+	private int emp_id;				//å¾“æ¥­å“¡ID
+	private String emp_name;		//åå‰
+	private char emp_gender;		//æ€§åˆ¥
+	private Date birth;		//èª•ç”Ÿæ—¥
+	private String position;	//å½¹è·
+	private String assignment;		//æ‰€å±
+	private int yearsWorked;	//å‹¤å‹™å¹´æ•°
+	private List<String> certificate; //è³‡æ ¼
+	private List<String> awardsPunishments;	//è³ç½°
+	private String programmingLanguage;	//ä½¿ç”¨è¨€èª
 	
+ã€€ã€€/**
+    * Staff ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®ç”Ÿæˆ
+    */
     public Staff(int emp_id,String emp_name,char emp_gender,Date birth,String position,String assignment,
       int yearsWorked,List<String> certificate,List<String> awardsPunishments,String programmingLanguage){
         this.emp_id = emp_id;
@@ -25,7 +28,10 @@ public class Staff {
         this.awardsPunishments = awardsPunishments;
         this.programmingLanguage = programmingLanguage;
     }
-    
+	
+        /**
+	* getterã®ç”Ÿæˆ
+	*/
 	public int getEmp_id() {
 		return emp_id;
 	}
