@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 public class Company {
     static Logger logger = Logger.getLogger(Company.class.getName());
     
-    //]‹Æˆõ‚Ì“o˜^
+    //å¾“æ¥­å“¡ã®ç™»éŒ²
     public void addStaff(Staff staff,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -48,7 +48,7 @@ public class Company {
         return query;
     }
     
-    //]‹Æˆõ‚Ìíœ
+    //å¾“æ¥­å“¡ã®å‰Šé™¤
     public void deleteStaff(int delete,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try{
@@ -64,10 +64,26 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //]‹Æˆõ‚ÌXV
+    //å¾“æ¥­å“¡ã®æ›´æ–°
     public void updateStaff(int updateID,Staff staff,Statement stmt) {
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
+	    stmt.executeUpdate("UPDATE emp SET "
+        			+ "emp_id = " + staff.getEmp_Id()
+        			+ "emp_name = " + staff.getEmp_name()
+        			+ "emp_gender = " + staff.getEmp_gender()
+        			+ "birth = " + staff.getBirth()
+        			+ "position = " + staff.getPosition()
+        			+ "assignment = " + staff.getAssignment()
+        			+ "yearsWorked = " + staff.getYearsWorked()
+        			+ "certificate1 = " + staff.getCertificate().get(0)
+        			+ "certificate2 = " + staff.getCertificate().get(1)
+        			+ "certificate3 = " + staff.getCertificate().get(2)
+        			+ "awardsPunishments1 = " + staff.getAwardsPunisuments().get(0)
+        			+ "awardsPunishments2 = " + staff.getAwardsPunisuments().get(1)
+        			+ "awardsPunishments3 = " + staff.getAwardsPunisuments().get(2)
+        			+ "programmingLanguage =" + staff.getProgrammingLanguage()
+        			+ " WHERE emp_id LIKE '" + emp_id + "';" );
         }catch (Exception e){
           System.out.println("Exception:" + e.getMessage());
         }
@@ -78,7 +94,7 @@ public class Company {
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
             ResultSet rs = stmt.executeQuery("SELECT emp_id,emp_name,emp_gender,position,assignment FROM emp;");
-            System.out.println("iD    –¼‘O       «•Ê  –ğE       Š‘®");
+            System.out.println("iD    åå‰       æ€§åˆ¥  å½¹è·       æ‰€å±");
             while(rs.next()){
                 int emp_id = rs.getInt("emp_id");
                 String emp_name = rs.getString("emp_name");
@@ -98,8 +114,8 @@ public class Company {
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp;");
-            System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N”" 
-            	+ "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+            System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•°" 
+            	+ "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
             while(rs.next()){
 	            System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),
@@ -118,7 +134,7 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT project.pj_id,project.pj_name,count(*) AS nofEmp FROM projectHistory " 
               + "LEFT JOIN project ON projectHistory.pj_id = project.pj_id GROUP BY pj_id;");
-            System.out.println("ProjcetiD    Project–¼         l”");
+            System.out.println("ProjcetiD    Projectå         äººæ•°");
             while(rs.next()){
                 int pj_id = rs.getInt("pj_id");
                 String pj_name = rs.getString("pj_name");
@@ -137,8 +153,8 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE emp_id LIKE '%" + emp_id +"%';");
             while(rs.next()){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N” " 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•° " 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                 System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -155,8 +171,8 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE emp_name LIKE '%" + emp_name +"%';");
             while(rs.next()){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N” " 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•° " 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                 System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -173,8 +189,8 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE emp_gender LIKE '%" + emp_gender +"%';");
             while(rs.next()){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N” " 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•° " 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                 System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -191,8 +207,8 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE birth LIKE '%" + birth +"%';");
             while(rs.next()){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N” " 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•° " 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                 System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -209,8 +225,8 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE position LIKE '%" + position +"%';");
             while(rs.next()){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N” " 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•° " 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                 System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -227,8 +243,8 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE assignment LIKE '%" + assignment +"%';");
             while(rs.next()){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N” " 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•° " 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                 System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -245,8 +261,8 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE yearsWorked LIKE '%" + yearsWorked +"%';");
             while(rs.next()){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N” " 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•° " 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                 System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -265,8 +281,8 @@ public class Company {
               certificate + "' or certificate3 = '" + certificate + "';");
             while(rs.next()){
                 if(rs.getString(8).contains(certificate)){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N” " 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•° " 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                     System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 	rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -286,8 +302,8 @@ public class Company {
               + awardsPunishments + "' or awardsPunishments3 = '" + awardsPunishments + "';");
             while(rs.next()){
                 if(rs.getString(9).contains(awardsPunishments)){
-                    System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N”" 
-                      + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                    System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•°" 
+                      + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                     System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 	rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
@@ -305,8 +321,8 @@ public class Company {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM emp WHERE programmingLanguage LIKE '%" + programmingLanguage +"%';");
             while(rs.next()){
-                System.out.println("iD   –¼‘O       «•Ê ¶”NŒ“ú   –ğE       Š‘®       ‹Î–±”N”" 
-                  + "‘Ši1     ‘Ši2     ‘Ši3     Ü”±1        Ü”±2        Ü”±3        ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+                System.out.println("iD   åå‰       æ€§åˆ¥ ç”Ÿå¹´æœˆæ—¥   å½¹è·       æ‰€å±       å‹¤å‹™å¹´æ•°" 
+                  + "è³‡æ ¼1     è³‡æ ¼2     è³‡æ ¼3     è³ç½°1        è³ç½°2        è³ç½°3        ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
                 System.out.println(String.format("%-4s %-10s %-4s %-10s %-10s %-10s %-8s %-9s %-9s %-9s %-12s %-12s %-12s %-10s",
                 rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getString(5),rs.getString(6),rs.getInt(7),
                 rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14)));
