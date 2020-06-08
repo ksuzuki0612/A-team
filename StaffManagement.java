@@ -21,17 +21,20 @@ public class StaffManagement {
         FileHandler handler = new FileHandler("log.txt"); 
         handler.setFormatter(new SimpleFormatter()); 
         logger.addHandler(handler); 
-        // ƒƒOƒŒƒxƒ‹‚Ìİ’è
+        // ãƒ­ã‚°ãƒ¬ãƒ™ãƒ«ã®è¨­å®š
         logger.setLevel(Level.FINER);
         
-        System.out.println("]‹ÆˆõID‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+	//IDã¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®å…¥åŠ›    
+        System.out.println("å¾“æ¥­å“¡IDã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         String userID = new java.util.Scanner(System.in).nextLine();
-        System.out.println("ƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         String password = new java.util.Scanner(System.in).nextLine();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             Connection conn = DriverManager.getConnection(mysqlURL,userID,password);
             Statement stmt = conn.createStatement();
+	
+	ã€€ã€€//æ¨©é™ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆ†å²
             if(company.Login(stmt) == true){
                 if(company.Authority(userID,stmt) == true){
                     managerMenu(stmt);
@@ -45,20 +48,20 @@ public class StaffManagement {
         }
     }
     
-    //ƒƒjƒ…[‘I‘ğ
+    //ç®¡ç†è€…ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼
     public static void managerMenu(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exid = 0;
         do {
-            System.out.println("\n[ƒƒjƒ…[]");
-            System.out.println("1:]‹Æˆõ“o˜^");
-            System.out.println("2.]‹Æˆõíœ");
-            System.out.println("3.]‹ÆˆõXV");
-            System.out.println("4.]‹Æˆõˆê——");
-            System.out.println("5.ŒÂlî•ñˆê——");
-            System.out.println("6.ƒAƒTƒCƒ“ƒƒ“ƒgó‹µˆê——");
-            System.out.println("7.ŒŸõ");
-            System.out.println("8.I—¹\n");
+            System.out.println("\n[ãƒ¡ãƒ‹ãƒ¥ãƒ¼]");
+            System.out.println("1:å¾“æ¥­å“¡ç™»éŒ²");
+            System.out.println("2.å¾“æ¥­å“¡å‰Šé™¤");
+            System.out.println("3.å¾“æ¥­å“¡æ›´æ–°");
+            System.out.println("4.å¾“æ¥­å“¡ä¸€è¦§");
+            System.out.println("5.å€‹äººæƒ…å ±ä¸€è¦§");
+            System.out.println("6.ã‚¢ã‚µã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆçŠ¶æ³ä¸€è¦§");
+            System.out.println("7.æ¤œç´¢");
+            System.out.println("8.çµ‚äº†\n");
             int number = new java.util.Scanner(System.in).nextInt();
             switch (number) {
                 case 1:
@@ -71,7 +74,7 @@ public class StaffManagement {
                     updateStaff(stmt);
                     break;
                 case 4:
-                    System.out.println("]‹Æˆõˆê——");
+                    System.out.println("å¾“æ¥­å“¡ä¸€è¦§");
                     company.employeeView(stmt);
                     break;
                 case 5:
@@ -91,21 +94,21 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //ƒƒjƒ…[‘I‘ğ
+    //å¾“æ¥­å“¡ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼
     public static void userMenu(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exid = 0;
         do {
-            System.out.println("\n[ƒƒjƒ…[]");
-            System.out.println("1:]‹Æˆõˆê——");
-            System.out.println("2.ŒÂlî•ñˆê——");
-            System.out.println("3.ƒAƒTƒCƒ“ƒƒ“ƒgó‹µˆê——");
-            System.out.println("4.ŒŸõ");
-            System.out.println("5.I—¹");
+            System.out.println("\n[ãƒ¡ãƒ‹ãƒ¥ãƒ¼]");
+            System.out.println("1:å¾“æ¥­å“¡ä¸€è¦§");
+            System.out.println("2.å€‹äººæƒ…å ±ä¸€è¦§");
+            System.out.println("3.ã‚¢ã‚µã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆçŠ¶æ³ä¸€è¦§");
+            System.out.println("4.æ¤œç´¢");
+            System.out.println("5.çµ‚äº†");
             int number = new java.util.Scanner(System.in).nextInt();
             switch (number) {
                 case 1:
-                    System.out.println("]‹Æˆõˆê——");
+                    System.out.println("å¾“æ¥­å“¡ä¸€è¦§");
                     company.employeeView(stmt);
                     break;
                 case 2:
@@ -125,7 +128,7 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
 
-    //]‹Æˆõ‚Ì“o˜^
+    //å¾“æ¥­å“¡ã®ç™»éŒ²
     public static void addStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         Staff data = new Staff(inputID(),inputName(),inputGender(),inputBirth(),inputPosition(),inputAssignment(),
@@ -134,41 +137,41 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //]‹ÆˆõID‚Ì“ü—Í
+    //å¾“æ¥­å“¡IDã®å…¥åŠ›
     public static int inputID(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("]‹ÆˆõID‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("å¾“æ¥­å“¡IDã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         int emp_id = new java.util.Scanner(System.in).nextInt();
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return emp_id;
     }
     
-    //]‹Æˆõ–¼‚Ì“ü—Í
+    //å¾“æ¥­å“¡åã®å…¥åŠ›
     public static String inputName(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("]‹Æˆõ–¼‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("å¾“æ¥­å“¡åã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         String emp_name = new java.util.Scanner(System.in).nextLine();
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return emp_name;
     }
     
-    //«•Ê‚Ì“ü—Í
+    //æ€§åˆ¥ã®å…¥åŠ›
     public static char inputGender(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("«•Ê‚ğMi’j«jAFi—«jAXi‚»‚Ì‘¼j‚©‚ç‘I‘ğ‚µ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("æ€§åˆ¥ã‚’Mï¼ˆç”·æ€§ï¼‰ã€Fï¼ˆå¥³æ€§ï¼‰ã€Xï¼ˆãã®ä»–ï¼‰ã‹ã‚‰é¸æŠã—å…¥åŠ›ã—ã¦ãã ã•ã„");
         String strGender = new java.util.Scanner(System.in).nextLine();
         char emp_gender = strGender.charAt(0);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return emp_gender;
     }
     
-    //¶”NŒ“ú‚Ì“ü—Í
+    //ç”Ÿå¹´æœˆæ—¥ã®å…¥åŠ›
     public static Date inputBirth(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         boolean dateCheck = false;
         Date Birth = new Date(1600705425827L);
         do {
-            System.out.println("¶”NŒ“ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+            System.out.println("ç”Ÿå¹´æœˆæ—¥ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
             String strBirth = new java.util.Scanner(System.in).nextLine();
             SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-mm-dd");
             try(FileWriter fw = new FileWriter("data.txt");){
@@ -176,50 +179,50 @@ public class StaffManagement {
                 Birth = date;
                 dateCheck = true;
             }catch(Exception e) {
-                System.out.println("³‚µ‚­“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+                System.out.println("æ­£ã—ãå…¥åŠ›ã—ã¦ãã ã•ã„");
             }
         }while(dateCheck == false);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return Birth;
     }
     
-    //–ğE‚Ì“ü—Í
+    //å½¹è·ã®å…¥åŠ›
     public static String inputPosition(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("–ğE‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("å½¹è·ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         String position = new java.util.Scanner(System.in).nextLine();
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return position;
     }
     
-    //Š‘®‚Ì“ü—Í
+    //æ‰€å±ã®å…¥åŠ›
     public static String inputAssignment(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("Š‘®‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("æ‰€å±ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         String assignment = new java.util.Scanner(System.in).nextLine();
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return assignment;
     }
     
-    //‹Î–±”N”‚Ì“ü—Í
+    //å‹¤å‹™å¹´æ•°ã®å…¥åŠ›
     public static int inputYearsWorked(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("‹Î–±”N”‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("å‹¤å‹™å¹´æ•°ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         int yearsWorked = new java.util.Scanner(System.in).nextInt();
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return yearsWorked;
     }
     
-    //‘Ši‚Ì“ü—Í
+    //è³‡æ ¼ã®å…¥åŠ›
     public static List<String> inputCertificate(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int i=0;
         List<String> certificate = new ArrayList<String>();
         for(int j = 0 ; j < 3 ; j++){
-            System.out.println("‘Ši‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+            System.out.println("è³‡æ ¼ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
             String strCertificate = new java.util.Scanner(System.in).nextLine();
             certificate.add(strCertificate);
-            System.out.println("I—¹‚·‚éê‡‚Í1‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B");
+            System.out.println("çµ‚äº†ã™ã‚‹å ´åˆã¯1ã‚’æŠ¼ã—ã¦ãã ã•ã„ã€‚");
             String str = new java.util.Scanner(System.in).nextLine();
             if(str.equals("1")){
                 j = 3;
@@ -229,16 +232,16 @@ public class StaffManagement {
         return certificate;
     }
     
-    //Ü”±‚Ì“ü—Í
+    //è³ç½°ã®å…¥åŠ›
     public static List<String> inputAwardsPunishments(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int i=0;
         List<String> awardsPunishments = new ArrayList<String>();
         for(int j = 0 ; j < 3 ; j++){
-            System.out.println("Ü”±‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+            System.out.println("è³ç½°ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
             String strAwardsPunishments = new java.util.Scanner(System.in).nextLine();
             awardsPunishments.add(strAwardsPunishments);
-            System.out.println("I—¹‚·‚éê‡‚Í1‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B");
+            System.out.println("çµ‚äº†ã™ã‚‹å ´åˆã¯1ã‚’æŠ¼ã—ã¦ãã ã•ã„ã€‚");
             String str = new java.util.Scanner(System.in).nextLine();
             if(str.equals("1")){
                 j = 3;
@@ -248,29 +251,29 @@ public class StaffManagement {
         return awardsPunishments;
     }
     
-    //g—pŒ¾Œê‚Ì“ü—Í
+    //ä½¿ç”¨è¨€èªã®å…¥åŠ›
     public static String inputProgrammingLanguage(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("g—pŒ¾Œê‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("ä½¿ç”¨è¨€èªã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         String programmingLanguage = new java.util.Scanner(System.in).nextLine();
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return programmingLanguage;
     }
     
-    //]‹Æˆõ‚Ìíœ
+    //å¾“æ¥­å“¡ã®å‰Šé™¤
     public static void deleteStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("íœ‚·‚é]‹Æˆõ‚ÌID‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("å‰Šé™¤ã™ã‚‹å¾“æ¥­å“¡ã®IDã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         int delete = new java.util.Scanner(System.in).nextInt();
         company.deleteStaff(delete,stmt);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //]‹Æˆõ‚ÌXV
+    //å¾“æ¥­å“¡ã®æ›´æ–°
     public static void updateStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         boolean exist = false;
-        System.out.println("•ÏX‚·‚é]‹Æˆõ‚ÌID‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        System.out.println("å¤‰æ›´ã™ã‚‹å¾“æ¥­å“¡ã®IDã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
         int updateID = new java.util.Scanner(System.in).nextInt();
         Staff data = new Staff(inputID(),inputName(),inputGender(),inputBirth(),inputPosition(),inputAssignment(),
             inputYearsWorked(),inputCertificate(),inputAwardsPunishments(),inputProgrammingLanguage());
@@ -278,61 +281,61 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
 
-    //]‹Æˆõ‚ÌŒŸõ
+    //å¾“æ¥­å“¡ã®æ¤œç´¢
     public static void searchStaffs(Statement stmt)throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("ŒŸõ‚·‚é]‹Æˆõ‚Ì€–Ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
-        System.out.println("1:ĞˆõID\n2:–¼‘O\n3:«•Ê\n4:¶”NŒ“ú\n5:–ğE\n6:Š‘®\n7:‹Î–±”N”\n8:‘Ši\n9:Ü”±\n10:ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê");
+        System.out.println("æ¤œç´¢ã™ã‚‹å¾“æ¥­å“¡ã®é …ç›®ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
+        System.out.println("1:ç¤¾å“¡ID\n2:åå‰\n3:æ€§åˆ¥\n4:ç”Ÿå¹´æœˆæ—¥\n5:å½¹è·\n6:æ‰€å±\n7:å‹¤å‹™å¹´æ•°\n8:è³‡æ ¼\n9:è³ç½°\n10:ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª");
         int selectedInformation = new java.util.Scanner(System.in).nextInt();
         switch(selectedInformation){
             case 1:
-                System.out.println("ĞˆõID‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("ç¤¾å“¡IDã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 int emp_id = new java.util.Scanner(System.in).nextInt();
                 company.searchByEmp_id(emp_id,stmt);
                 break;
             case 2:
-                System.out.println("Ğˆõ‚Ì–¼‘O‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("ç¤¾å“¡ã®åå‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 String emp_name = new java.util.Scanner(System.in).nextLine();
                 company.searchByEmp_name(emp_name,stmt);
                 break;
             case 3:
-                System.out.println("«•Ê‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("æ€§åˆ¥ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 String str = new java.util.Scanner(System.in).nextLine();
                 char emp_gender = str.charAt(0);
                 company.searchByEmp_gender(emp_gender,stmt);
                 break;
             case 4:
-                System.out.println("¶”NŒ“ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B—á1993-08-19");
+                System.out.println("ç”Ÿå¹´æœˆæ—¥ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚ä¾‹1993-08-19");
                 String birth = new java.util.Scanner(System.in).nextLine();
                 company.searchByBirth(birth,stmt);
                 break;
             case 5:
-                System.out.println("–ğE‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("å½¹è·ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 String position = new java.util.Scanner(System.in).nextLine();
                 company.searchByPosition(position,stmt);
                 break;
             case 6:
-                System.out.println("Š‘®“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("æ‰€å±å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 String assignment = new java.util.Scanner(System.in).nextLine();
                 company.searchByAssignment(assignment,stmt);
                 break;
             case 7:
-                System.out.println("‹Î–±”N”‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("å‹¤å‹™å¹´æ•°ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 int yearsWorked = new java.util.Scanner(System.in).nextInt();
                 company.searchByYearsWorked(yearsWorked,stmt);
                 break;
             case 8:
-                System.out.println("‘Ši‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("è³‡æ ¼ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 String certificate = new java.util.Scanner(System.in).nextLine();
                 company.searchByCertificate(certificate,stmt);
                 break;
             case 9:
-                System.out.println("Ü”±‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("è³ç½°ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 String awardsPunishments = new java.util.Scanner(System.in).nextLine();
                 company.searchByAwardsPunishments(awardsPunishments,stmt);
                 break;
             case 10:
-                System.out.println("ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+                System.out.println("ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èªã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
                 String programmingLanguage = new java.util.Scanner(System.in).nextLine();
                 company.searchByProgrammingLanguage(programmingLanguage,stmt);
                 break;
