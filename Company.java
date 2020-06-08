@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 public class Company {
     static Logger logger = Logger.getLogger(Company.class.getName());
     
-    //]‹Æˆõ‚Ì“o˜^
+    /**
+    *]‹Æˆõ‚Ì“o˜^
+    */
     public void addStaff(Staff staff,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -18,12 +20,16 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *mysql‚Ìinsert•¶‚Ìì¬
+    *‘Ši‚ÆÜ”±‚Í“ü—Í‚³‚ê‚½•ª‚¾‚¯“o˜^‚·‚é
+    */
     public static String insetQuery(Staff staff){
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
+        String strBirth = new SimpleDateFormat("yyyy-MM-dd").format(staff.getBirth());
         String insertOther = "INSERT INTO emp(emp_id,emp_name,emp_gender,birth,position,assignment,yearsWorked";
         String insertCertificate = "";
         String insertAwardsPunishments = "";
-        String strBirth = new SimpleDateFormat("yyyy-MM-dd").format(staff.getBirth());
         String insertValueOther = "VALUES(" + staff.getEmp_id() + ",'" + staff.getEmp_name() + "','" + staff.getEmp_gender() + 
           "','" + strBirth + "','" + staff.getPosition() + "','" + staff.getAssignment() + "'," + staff.getYearsWorked();
         String insertValueCertificate = "";
@@ -48,7 +54,9 @@ public class Company {
         return query;
     }
     
-    //]‹Æˆõ‚Ìíœ
+    /**
+    *]‹Æˆõ‚Ìíœ
+    */
     public void deleteStaff(int delete,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try{
@@ -64,16 +72,43 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //]‹Æˆõ‚ÌXV
+    /**
+    *]‹Æˆõ‚ÌXV
+    */
     public void updateStaff(int updateID,Staff staff,Statement stmt) {
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
+            String strBirth = new SimpleDateFormat("yyyy-MM-dd").format(staff.getBirth());
+	        String update = "UPDATE emp SET "
+                          + "emp_id = " + staff.getEmp_id()
+                          + ",emp_name = '" + staff.getEmp_name()
+                          + "',emp_gender = '" + staff.getEmp_gender()
+                          + "',birth = '" + strBirth
+                          + "',position = '" + staff.getPosition()
+                          + "',assignment = '" + staff.getAssignment()
+                          + "',yearsWorked = " + staff.getYearsWorked();
+            for(int j = 0; j<staff.getCertificate().size(); j++){
+                if(!(staff.getCertificate().get(j).equals(""))){
+                    update = ",certificate" + (j + 1) + ",'" + staff.getCertificate().get(j) + "'"; 
+                }
+            }
+            for(int j = 0; j<staff.getAwardsPunishments().size(); j++){
+                if(!(staff.getAwardsPunishments().get(j).equals(""))){
+                    update = ",awardsPunishments" + (j + 1) + ",'" + staff.getAwardsPunishments().get(j) + "'";
+                }
+            }
+            String update = update + "',programmingLanguage ='" + staff.getProgrammingLanguage()
+                          + "' WHERE emp_id LIKE '" + updateID + "';" );
+        	stmt.executeUpdate(update);
         }catch (Exception e){
           System.out.println("Exception:" + e.getMessage());
         }
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
-    
+	
+    /**
+    *]‹Æˆõˆê——
+    */
     public static void employeeView(Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -93,7 +128,10 @@ public class Company {
         }
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
-    
+   
+    /**
+    *ŒÂlî•ñˆê——
+    */
     public static void informationView(Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -113,6 +151,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *ƒAƒTƒCƒ“ƒƒ“ƒgó‹µˆê——
+    */
     public static void assignmentView(Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -132,6 +173,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *]‹ÆˆõID‚ÅŒŸõ
+    */
     public void searchByEmp_id(int emp_id,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -150,6 +194,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *]‹Æˆõ–¼‚ÅŒŸõ
+    */
     public void searchByEmp_name(String emp_name,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -168,6 +215,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *«•Ê‚ÅŒŸõ
+    */
     public void searchByEmp_gender(char emp_gender,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -186,6 +236,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *’a¶“ú‚ÅŒŸõ
+    */
     public void searchByBirth(String birth,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -204,6 +257,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *–ğE‚ÅŒŸõ
+    */
     public void searchByPosition(String position,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -222,6 +278,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *ƒAƒTƒCƒ“ƒƒ“ƒg‚ÅŒŸõ
+    */
     public void searchByAssignment(String assignment,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -240,6 +299,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *‹Î–±”N”‚ÅŒŸõ
+    */
     public void searchByYearsWorked(int yearsWorked,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -258,6 +320,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *‘Ši‚ÅŒŸõ
+    */
     public void searchByCertificate(String certificate,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -279,6 +344,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *Ü”±‚ÅŒŸõ
+    */
     public void searchByAwardsPunishments(String awardsPunishments,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -300,6 +368,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
+    /**
+    *ƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾Œê‚ÅŒŸõ
+    */
     public void searchByProgrammingLanguage(String programmingLanguage,Statement stmt) throws Exception{
         logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         try {
@@ -318,31 +389,9 @@ public class Company {
         logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    public void exitID(int emp_id,Statement stmt) throws Exception{
-        logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        int exitID = 0;
-        try {
-            ResultSet rs = stmt.executeQuery("SELECT count(*) AS exitID FROM emp WHERE emp_id LIKE '%" + emp_id +"%' GROUP BY emp_id;");
-            rs.next();
-            exitID = rs.getInt("exitID");
-            rs.close();
-        }catch (Exception e){
-          System.out.println("Exception:" + e.getMessage());
-        }
-        logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
-    }
-    
-    public boolean Login(Statement stmt) throws Exception{
-    	boolean login = false;
-    	try {
-            login = true;
-        }catch (Exception e){
-          System.out.println("Exception:" + e.getMessage());
-        }
-        logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
-        return login;
-    }
-    
+    /**
+    *Œ ŒÀ‚Ì—L–³
+    */
     public boolean Authority(String userID, Statement stmt) throws Exception{
     	boolean authority = false;
     	try {
