@@ -24,7 +24,9 @@ public class StaffManagement {
         // ログレベルの設定
         logger.setLevel(Level.FINER);
         
-	//IDとパスワードの入力    
+	/**
+	* IDおよびパスワードの入力
+	*/
         System.out.println("従業員IDを入力してください");
         String userID = new java.util.Scanner(System.in).nextLine();
         System.out.println("パスワードを入力してください");
@@ -48,7 +50,9 @@ public class StaffManagement {
         }
     }
     
-    //管理者のメニュー
+    /**
+    * 管理者のメニュー
+    */
     public static void managerMenu(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exid = 0;
@@ -94,7 +98,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //従業員のメニュー
+    /**
+    * 従業員のメニュー
+    */
     public static void userMenu(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exid = 0;
@@ -128,7 +134,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
 
-    //従業員の登録
+    /**
+    * 従業員の登録
+    */
     public static void addStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         Staff data = new Staff(inputID(),inputName(),inputGender(),inputBirth(),inputPosition(),inputAssignment(),
@@ -137,7 +145,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //従業員IDの入力
+    /**
+    * 従業員IDの入力
+    */
     public static int inputID(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("従業員IDを入力してください");
@@ -146,7 +156,9 @@ public class StaffManagement {
         return emp_id;
     }
     
-    //従業員名の入力
+    /**
+    * 従業員名の入力
+    */
     public static String inputName(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("従業員名を入力してください");
@@ -155,7 +167,10 @@ public class StaffManagement {
         return emp_name;
     }
     
-    //性別の入力
+    /**
+    * 性別の入力
+    */
+   
     public static char inputGender(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("性別をM（男性）、F（女性）、X（その他）から選択し入力してください");
@@ -165,7 +180,9 @@ public class StaffManagement {
         return emp_gender;
     }
     
-    //生年月日の入力
+    /**
+    * 生年月日の入力
+    */
     public static Date inputBirth(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         boolean dateCheck = false;
@@ -186,7 +203,9 @@ public class StaffManagement {
         return Birth;
     }
     
-    //役職の入力
+    /**
+    * 役職の入力
+    */
     public static String inputPosition(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("役職を入力してください");
@@ -195,7 +214,9 @@ public class StaffManagement {
         return position;
     }
     
-    //所属の入力
+    /**
+    * 所属の入力
+    */
     public static String inputAssignment(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("所属を入力してください");
@@ -204,7 +225,9 @@ public class StaffManagement {
         return assignment;
     }
     
-    //勤務年数の入力
+    /**
+    * 勤務年数の入力
+    */
     public static int inputYearsWorked(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("勤務年数を入力してください");
@@ -213,7 +236,9 @@ public class StaffManagement {
         return yearsWorked;
     }
     
-    //資格の入力
+    /**
+    * 資格の入力
+    */
     public static List<String> inputCertificate(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int i=0;
@@ -232,7 +257,9 @@ public class StaffManagement {
         return certificate;
     }
     
-    //賞罰の入力
+    /**
+    * 賞罰の入力
+    */
     public static List<String> inputAwardsPunishments(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int i=0;
@@ -251,7 +278,9 @@ public class StaffManagement {
         return awardsPunishments;
     }
     
-    //使用言語の入力
+    /**
+    * 使用言語の入力
+    */
     public static String inputProgrammingLanguage(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("使用言語を入力してください");
@@ -260,7 +289,9 @@ public class StaffManagement {
         return programmingLanguage;
     }
     
-    //従業員の削除
+    /**
+    * 従業員の削除
+    */
     public static void deleteStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("削除する従業員のIDを入力してください");
@@ -269,7 +300,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
     
-    //従業員の更新
+    /**
+    * 従業員の更新
+    */
     public static void updateStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         boolean exist = false;
@@ -281,7 +314,9 @@ public class StaffManagement {
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
 
-    //従業員の検索
+    /**
+    * 従業員の検索
+    */
     public static void searchStaffs(Statement stmt)throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("検索する従業員の項目を入力してください。");
