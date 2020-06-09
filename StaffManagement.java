@@ -14,7 +14,6 @@ import java.sql.SQLException;
 public class StaffManagement {
     static Logger logger = Logger.getLogger(StaffManagement.class.getName());
     private static Company company = new Company();
-    private static int logout = 0;
     static final String mysqlURL = "jdbc:mysql://localhost:3306/employee?useUnicode=true&useJDBC"
                                  + "CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     
@@ -24,26 +23,28 @@ public class StaffManagement {
         logger.addHandler(handler); 
         // ログレベルの設定
         logger.setLevel(Level.FINER);
+        String logout = "";
         do{
-              System.out.println("従業員IDを入力してください");
-              String userID = new java.util.Scanner(System.in).nextLine();
-              System.out.println("パスワードを入力してください");
-              String password = new java.util.Scanner(System.in).nextLine();
-              try {
-                Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-                Connection conn = DriverManager.getConnection(mysqlURL,userID,password);
-                Statement stmt = conn.createStatement();
-                if(company.Authority(userID,stmt) == true){
-                    managerMenu(stmt);
-                }else{
-                	userMenu(stmt);
-                }
-                stmt.close();
+            System.out.println("従業員IDを入力してください");
+            String userID = new java.util.Scanner(System.in).nextLine();
+            System.out.println("パスワードを入力してください");
+            String password = new java.util.Scanner(System.in).nextLine();
+            try {
+              Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+              Connection conn = DriverManager.getConnection(mysqlURL,userID,password);
+              Statement stmt = conn.createStatement();
+              if(company.Authority(userID,stmt) == true){
+                  managerMenu(stmt);
+              }else{
+              	userMenu(stmt);
+              }
+              stmt.close();
             }catch (Exception e){
                 System.out.println("Exception:" + e.getMessage());
             }
-                    logout = 1;
-        }while(logout != 1);
+            System.out.println("終了する場合は1を入力してください");
+            logout = new java.util.Scanner(System.in).nextLine();
+        }while(!logout.equals("1"));
     }
     
     /**
