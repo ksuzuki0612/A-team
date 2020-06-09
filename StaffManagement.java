@@ -82,7 +82,7 @@ public class StaffManagement {
                     searchStaffs(stmt);
                     break;
                 case 8:
-                exid = 1; 
+                    exid = 1; 
                     break;
             }
         }while(exid != 1);
@@ -124,14 +124,23 @@ public class StaffManagement {
         }while(exid != 1);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
-
+    
     /**
     * 従業員の登録
     */
     public static void addStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        Staff data = new Staff(inputID(),inputName(),inputGender(),inputBirth(),inputPosition(),inputAssignment(),
-            inputYearsWorked(),inputCertificate(),inputAwardsPunishments(),inputProgrammingLanguage());
+        Staff data = new Staff(
+        	inputID(),
+        	inputName(),
+        	inputGender(),
+        	inputBirth(),
+        	inputPosition(),
+        	inputAssignment(),
+            inputYearsWorked(),
+            inputCertificate(),
+            inputAwardsPunishments(),
+            inputProgrammingLanguage());
         company.addStaff(data,stmt);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
@@ -161,7 +170,7 @@ public class StaffManagement {
     /**
     * 性別の入力
     */
-   
+    
     public static char inputGender(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("性別をM（男性）、F（女性）、X（その他）から選択し入力してください");
@@ -235,14 +244,12 @@ public class StaffManagement {
         int i=0;
         List<String> certificate = new ArrayList<String>();
         for(int j = 0 ; j < 3 ; j++){
-            System.out.println("資格を入力してください");
+            System.out.println("資格を入力してください(終了する場合は0)");
             String strCertificate = new java.util.Scanner(System.in).nextLine();
-            certificate.add(strCertificate);
-            System.out.println("終了する場合は1を押してください。");
-            String str = new java.util.Scanner(System.in).nextLine();
-            if(str.equals("1")){
-                j = 3;
+            if(strCertificate.equals("0")){
+                break;
             }
+            certificate.add(strCertificate);
         }
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return certificate;
@@ -256,14 +263,12 @@ public class StaffManagement {
         int i=0;
         List<String> awardsPunishments = new ArrayList<String>();
         for(int j = 0 ; j < 3 ; j++){
-            System.out.println("賞罰を入力してください");
+            System.out.println("賞罰を入力してください(終了する場合は0)");
             String strAwardsPunishments = new java.util.Scanner(System.in).nextLine();
-            awardsPunishments.add(strAwardsPunishments);
-            System.out.println("終了する場合は1を押してください。");
-            String str = new java.util.Scanner(System.in).nextLine();
-            if(str.equals("1")){
-                j = 3;
+            if(strAwardsPunishments.equals("0")){
+                break;
             }
+            awardsPunishments.add(strAwardsPunishments);
         }
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return awardsPunishments;
@@ -368,5 +373,4 @@ public class StaffManagement {
         }
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
-    
 }

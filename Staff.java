@@ -12,8 +12,8 @@ public class Staff {
 	private List<String> awardsPunishments;	//賞罰
 	private String programmingLanguage;	//使用言語
 	
-　　/**
-    * Staff コンストラクタの生成
+    /**
+    * Staffコンストラクタの生成
     */
     public Staff(int emp_id,String emp_name,char emp_gender,Date birth,String position,String assignment,
       int yearsWorked,List<String> certificate,List<String> awardsPunishments,String programmingLanguage){
@@ -29,9 +29,9 @@ public class Staff {
         this.programmingLanguage = programmingLanguage;
     }
 	
-        /**
-	* getterの生成
-	*/
+    /**
+    *getterの生成
+    */
 	public int getEmp_id() {
 		return emp_id;
 	}
