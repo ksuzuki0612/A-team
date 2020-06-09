@@ -1,0 +1,99 @@
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON employee.* TO MIN@localhost;
+
+FLUSH PRIVILEGES; 
+
+USE employee;
+
+CREATE TABLE emp (
+emp_id int NOT NULL, 
+emp_name varchar(30) NOT NULL, 
+emp_gender char(1) NOT NULL, 
+birth date NOT NULL, 
+position varchar(20) NOT NULL, 
+assignment varchar(20) NOT NULL, 
+yearsWorked int NOT NULL, 
+certificate1 varchar(30) NOT NULL,  
+certificate2 varchar(30) NOT NULL, 
+certificate3 varchar(30) NOT NULL, 
+awardsPunishments1 varchar(30) NOT NULL, 
+awardsPunishments2 varchar(30) NOT NULL, 
+awardsPunishments3 varchar(30) NOT NULL, 
+programmingLanguage varchar(30)
+, PRIMARY KEY (emp_id));
+
+CREATE TABLE users (
+emp_id int NOT NULL, 
+password varchar(10) NOT NULL,
+authority boolean NOT NULL
+, PRIMARY KEY (emp_id));
+
+
+CREATE TABLE project (
+pj_id char(10) NOT NULL, 
+pj_name varchar(30) NOT NULL, 
+pj_place varchar(30) NOT NULL
+, PRIMARY KEY (pj_id));
+
+
+CREATE TABLE projectHistory(
+ph_id int NOT NULL, 
+pj_id char(10) NOT NULL, 
+emp_id int NOT NULL, 
+startDate date NOT NULL,
+endDate date
+, PRIMARY KEY (ph_id));
+
+従業員一覧
+SELECT emp_id, emp_name, emp_gender, position, assignment  FROM emp; 
+
+個人情報一覧(資格、賞罰は省略し、プロジェクト履歴は除く)
+SELECT emp_id, emp_name, emp_gender, birth, position, assignment, yearsWorked, programmingLanguage, certificate1, awardsPunishments1 FROM emp; 
+
+アサインメント状況一覧
+SELECT emp.emp_id, emp.emp_name, count(*) FROM projectHistory LEFT JOIN emp ON projectHistory.emp_id = emp.emp_id GROUP BY emp.emp_id;
+
+従業員の追加
+INSERT INTO emp(emp_id, emp_name, emp_gender, birth, position, assignment, yearsWorked, certificate1, certificate2, certificate3, awardsPunishments1, awardsPunishments2, awardsPunishments3, programmingLanguage) VALUES(1234, 'Min', 'M', '1993-08-19', 'new', 'shinagawa', 1, 'JLPT N1', '', '',  'keieizyouhou2018', 'keieizyouhou2019', '', 'java, C,');
+INSERT INTO emp(emp_id, emp_name, emp_gender, birth, position, assignment, yearsWorked, certificate1, certificate2, certificate3, awardsPunishments1, awardsPunishments2, awardsPunishments3, programmingLanguage) VALUES(1235, 'Mate', 'M', '1990-08-12', 'seneir', 'matudo', 3, '', '', '', '', '', '', 'java');
+
+INSERT INTO users(emp_id, password, authority) VALUES(1234, 'MIN1234', 1);
+INSERT INTO users(emp_id, password, authority) VALUES(1235, 'Mate1235', 0);
+CREATE USER '1234'@'localhost' IDENTIFIED BY 'MIN1234'; 
+CREATE USER '1235'@'localhost' IDENTIFIED BY 'Mate1235'; 
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON employee.* TO '1234'@localhost;
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON employee.* TO '1235'@localhost;
+
+
+INSERT INTO project (pj_id, pj_name, pj_place) VALUES(1111, 'SmartFactory', 'nara');
+INSERT INTO project (pj_id, pj_name, pj_place) VALUES(2222, 'Secutiry', 'Matudo');
+
+INSERT INTO projectHistory(ph_id, pj_id, emp_id, startDate, endDate) VALUES(1,1111, '1234', 2019-05-23, 2019-06-23);
+INSERT INTO projectHistory(ph_id, pj_id, emp_id, startDate, endDate) VALUES(2,2222, '1235', 2016-05-23, 2019-06-03);
+
+従業員の削除
+DELETE FROM emp WHERE emp_id=1235;
+
+従業員の更新
+UPDATE emp SET position='manager' WHERE emp_id=1235;
+
+SELECT * FROM WHERE emp_id LIKE '1234';
+SELECT * FROM WHERE emp_name LIKE '%M%';
+
+CREATE VIEW Matome AS select 
+select 
+emp_name, 
+emp_gender, 
+birth, 
+position, 
+assignment, 
+yearsWorked, 
+certificate1, 
+certificate2, 
+certificate3, 
+awardsPunishments1, 
+awardsPunishments2, 
+awardsPunishments3, 
+programmingLanguage 
+FROM emp;
+
+ WHERE certificate LIKE '%N1%'
