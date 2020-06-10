@@ -25,22 +25,23 @@ public class StaffManagement {
         logger.setLevel(Level.FINER);
         String logout = "";
         do{
-            System.out.println("従業員IDを入力してください");
-            String userID = new java.util.Scanner(System.in).nextLine();
-            System.out.println("パスワードを入力してください");
-            String password = new java.util.Scanner(System.in).nextLine();
             try {
-              Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-              Connection conn = DriverManager.getConnection(mysqlURL,userID,password);
-              Statement stmt = conn.createStatement();
-              if(company.Authority(userID,stmt) == true){
-                  managerMenu(stmt);
-              }else{
-              	userMenu(stmt);
-              }
-              stmt.close();
+                System.out.println("従業員IDを入力してください");
+                int userID = new java.util.Scanner(System.in).nextInt();
+                String id = "" + userID;
+                System.out.println("パスワードを入力してください");
+                String password = new java.util.Scanner(System.in).nextLine();
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(mysqlURL,id,password);
+                Statement stmt = conn.createStatement();
+                if(company.Authority(userID,stmt) == true){
+                    managerMenu(stmt);
+                }else{
+                	userMenu(stmt);
+                }
+                stmt.close();
             }catch (Exception e){
-                System.out.println("Exception:" + e.getMessage());
+                System.out.println("認証エラーが発生しました。\nユーザー名またはパスワードが不正です。");
             }
             System.out.println("終了する場合は1を入力してください");
             logout = new java.util.Scanner(System.in).nextLine();
@@ -59,20 +60,28 @@ public class StaffManagement {
             System.out.println("2.一覧表示メニュー");
             System.out.println("3.検索メニュー");
             System.out.println("4.戻る");
-            int number = new java.util.Scanner(System.in).nextInt();
+            String number = new java.util.Scanner(System.in).nextLine();
+            boolean exit = false;
             switch (number) {
-                case 1:
+                case "1":
                     aditStaff(stmt);
+                    exit = true;
                     break;
-                case 2:
+                case "2":
                     viewStaff(stmt);
+                    exit = true;
                     break;
-                case 3:
+                case "3":
                     searchStaffs(stmt);
+                    exit = true;
                     break;
-                case 4:
+                case "4":
                     exid = 1; 
+                    exit = true;
                     break;
+            }
+            if(exit == false){
+            	System.out.println("選択されたメニューが見つかりません1");
             }
         }while(exid != 1);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
@@ -80,7 +89,7 @@ public class StaffManagement {
     
     
     /**
-    * 従業員のメニュー
+    * 一般のメニュー
     */
     public static void userMenu(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
@@ -90,17 +99,24 @@ public class StaffManagement {
             System.out.println("1.一覧表示メニュー");
             System.out.println("2.検索メニュー");
             System.out.println("3.戻る");
-            int number = new java.util.Scanner(System.in).nextInt();
+            String number = new java.util.Scanner(System.in).nextLine();
+            boolean exit = false;
             switch (number) {
-                case 1:
+                case "1":
+                    exit = true;
                     viewStaff(stmt);
                     break;
-                case 2:
+                case "2":
+                    exit = true;
                     searchStaffs(stmt);
                     break;
-                case 3:
+                case "3":
+                    exit = true;
                     exid = 1; 
                     break;
+            }
+            if(exit == false){
+            	System.out.println("選択されたメニューが見つかりません2");
             }
         }while(exid != 1);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
@@ -117,21 +133,29 @@ public class StaffManagement {
             System.out.println("1:従業員登録");
             System.out.println("2.従業員削除");
             System.out.println("3.従業員更新");
-            System.out.println("4.終了\n");
-            int number = new java.util.Scanner(System.in).nextInt();
+            System.out.println("4.戻る\n");
+            String number = new java.util.Scanner(System.in).nextLine();
+            boolean exit = false;
             switch (number) {
-                case 1:
+                case "1":
+                    exit = true;
                     addStaff(stmt);
                     break;
-                case 2:
+                case "2":
+                    exit = true;
                     deleteStaff(stmt);
                     break;
-                case 3:
+                case "3":
+                    exit = true;
                     updateStaff(stmt);
                     break;
-                case 4:
+                case "4":
+                    exit = true;
                     exid = 1; 
                     break;
+            }
+            if(exit == false){
+            	System.out.println("選択されたメニューが見つかりません3");
             }
         }while(exid != 1);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
@@ -150,12 +174,12 @@ public class StaffManagement {
         	inputPosition(),
         	inputAssignment(),
             inputYearsWorked(),
-            inputCertificate1(),
-            inputCertificate2(),
-            inputCertificate3(),
-            inputAwardsPunishments1(),
-            inputAwardsPunishments2(),
-            inputAwardsPunishments3(),
+            inputCertificate(),
+            inputCertificate(),
+            inputCertificate(),
+            inputAwardsPunishments(),
+            inputAwardsPunishments(),
+            inputAwardsPunishments(),
             inputProgrammingLanguage());
         company.addStaff(data,stmt);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
@@ -166,10 +190,20 @@ public class StaffManagement {
     */
     public static int inputID(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("従業員IDを入力してください");
-        int emp_id = new java.util.Scanner(System.in).nextInt();
+        boolean dateCheck = false;
+        int id = 0;
+        do {
+            System.out.println("従業員IDを入力してください");
+            String emp_id = new java.util.Scanner(System.in).nextLine();
+            try(FileWriter fw = new FileWriter("data.txt");){
+                id = Integer.parseInt(emp_id);
+                dateCheck = true;
+            }catch(Exception e) {
+                System.out.println("正しく入力してください");
+            }
+        }while(dateCheck == false);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
-        return emp_id;
+        return id;
     }
     
     /**
@@ -246,73 +280,39 @@ public class StaffManagement {
     */
     public static int inputYearsWorked(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("勤務年数を入力してください");
-        int yearsWorked = new java.util.Scanner(System.in).nextInt();
+        boolean dateCheck = false;
+        int year = 0;
+        do {
+            System.out.println("勤務年数を入力してください");
+            String yearsWorked = new java.util.Scanner(System.in).nextLine();
+            try(FileWriter fw = new FileWriter("data.txt");){
+                year = Integer.parseInt(yearsWorked);
+                dateCheck = true;
+            }catch(Exception e) {
+                System.out.println("正しく入力してください");
+            }
+        }while(dateCheck == false);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
-        return yearsWorked;
+        return year;
     }
     
     /**
-    * 資格1の入力
+    * 資格の入力
     */
-    public static String inputCertificate1(){
+    public static String inputCertificate(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("資格1を入力してください");
+        System.out.println("資格を入力してください");
         String strCertificate = new java.util.Scanner(System.in).nextLine();
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return strCertificate;
     }
     
     /**
-    * 資格2の入力
+    * 賞罰の入力
     */
-    public static String inputCertificate2(){
+    public static String inputAwardsPunishments(){
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("資格2を入力してください");
-        String strCertificate = new java.util.Scanner(System.in).nextLine();
-		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
-        return strCertificate;
-    }
-    
-    /**
-    * 資格3の入力
-    */
-    public static String inputCertificate3(){
-		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("資格3を入力してください");
-        String strCertificate = new java.util.Scanner(System.in).nextLine();
-		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
-        return strCertificate;
-    }
-    
-    /**
-    * 賞罰1の入力
-    */
-    public static String inputAwardsPunishments1(){
-		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("賞罰1を入力してください");
-        String strAwardsPunishments = new java.util.Scanner(System.in).nextLine();
-		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
-        return strAwardsPunishments;
-    }
-    
-    /**
-    * 賞罰2の入力
-    */
-    public static String inputAwardsPunishments2(){
-		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("賞罰1を入力してください");
-        String strAwardsPunishments = new java.util.Scanner(System.in).nextLine();
-		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
-        return strAwardsPunishments;
-    }
-    
-    /**
-    * 賞罰3の入力
-    */
-    public static String inputAwardsPunishments3(){
-		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
-        System.out.println("賞罰1を入力してください");
+        System.out.println("賞罰を入力してください");
         String strAwardsPunishments = new java.util.Scanner(System.in).nextLine();
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
         return strAwardsPunishments;
@@ -335,7 +335,7 @@ public class StaffManagement {
     public static void deleteStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         System.out.println("削除する従業員のIDを入力してください");
-        int delete = new java.util.Scanner(System.in).nextInt();
+        String delete = new java.util.Scanner(System.in).nextLine();
         company.deleteStaff(delete,stmt);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
@@ -346,11 +346,21 @@ public class StaffManagement {
     public static void updateStaff(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         boolean exist = false;
-        System.out.println("変更する従業員のIDを入力してください");
-        int updateID = new java.util.Scanner(System.in).nextInt();
+        boolean dateCheck = false;
+        int updateID = 0;
+        do {
+            System.out.println("変更する従業員のIDを入力してください");
+            String id = new java.util.Scanner(System.in).nextLine();
+            try(FileWriter fw = new FileWriter("data.txt");){
+                updateID = Integer.parseInt(id);
+                dateCheck = true;
+            }catch(Exception e) {
+                System.out.println("正しく入力してください");
+            }
+        }while(dateCheck == false);
         Staff data = new Staff(inputID(),inputName(),inputGender(),inputBirth(),inputPosition(),inputAssignment(),
-            inputYearsWorked(),inputCertificate1(),inputCertificate2(),inputCertificate3(),inputAwardsPunishments1(),
-            inputAwardsPunishments2(),inputAwardsPunishments3(),inputProgrammingLanguage());
+            inputYearsWorked(),inputCertificate(),inputCertificate(),inputCertificate(),inputAwardsPunishments(),
+            inputAwardsPunishments(),inputAwardsPunishments(),inputProgrammingLanguage());
         company.updateStaff(updateID,data,stmt);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
     }
@@ -362,25 +372,33 @@ public class StaffManagement {
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exid = 0;
         do {
+            boolean exit = false;
             System.out.println("\n[メニュー]");
             System.out.println("1:従業員一覧");
             System.out.println("2.個人情報一覧");
             System.out.println("3.アサインメント状況一覧");
             System.out.println("4.戻る\n");
-            int number = new java.util.Scanner(System.in).nextInt();
+            String number = new java.util.Scanner(System.in).nextLine();
             switch (number) {
-                case 1:
+                case "1":
+                    exit = true;
                     company.employeeView(stmt);
                     break;
-                case 2:
+                case "2":
                     company.informationView(stmt);
+                    exit = true;
                     break;
-                case 3:
+                case "3":
                     company.assignmentView(stmt);
+                    exit = true;
                     break;
-                case 4:
+                case "4":
+                    exit = true;
                     exid = 1; 
                     break;
+            }
+            if(exit == false){
+            	System.out.println("選択されたメニューが見つかりません4");
             }
         }while(exid != 1);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());
@@ -389,68 +407,62 @@ public class StaffManagement {
     /**
     * 従業員の検索
     */
-    public static void searchStaffs(Statement stmt)throws Exception{
+    public static void searchStaffs(Statement stmt) throws Exception{
 		logger.entering(LogUtil.getClassName(),LogUtil.getMethodName());
         int exid = 0;
         do {
-        System.out.println("\n検索する従業員の項目を入力してください。");
-        System.out.println("1:社員ID\n2:名前\n3:性別\n4:生年月日\n5:役職\n6:所属\n7:勤務年数\n8:資格\n9:賞罰\n10:プログラミング言語\n11:戻る");
-        int selectedInformation = new java.util.Scanner(System.in).nextInt();
+            boolean exit = false;
+            System.out.println("\n検索する従業員の項目を入力してください。");
+            System.out.println("1:社員ID\n2:名前\n3:性別\n4:生年月日\n5:役職\n6:所属\n7:勤務年数\n8:資格\n9:賞罰\n10:プログラミング言語\n11:戻る\n");
+            String selectedInformation = new java.util.Scanner(System.in).nextLine();
             switch(selectedInformation){
-                case 1:
-                    System.out.println("社員IDを入力してください。");
-                    int emp_id = new java.util.Scanner(System.in).nextInt();
-                    company.searchByEmp_id(emp_id,stmt);
+                case "1":
+                    exit = true;
+                    company.searchByEmp_id(inputID(),stmt);
                     break;
-                case 2:
-                    System.out.println("社員の名前を入力してください。");
-                    String emp_name = new java.util.Scanner(System.in).nextLine();
-                    company.searchByEmp_name(emp_name,stmt);
+                case "2":
+                    exit = true;
+                    company.searchByEmp_name(inputName(),stmt);
                     break;
-                case 3:
-                    System.out.println("性別を入力してください。");
-                    String str = new java.util.Scanner(System.in).nextLine();
-                    char emp_gender = str.charAt(0);
-                    company.searchByEmp_gender(emp_gender,stmt);
+                case "3":
+                    exit = true;
+                    company.searchByEmp_gender(inputGender(),stmt);
                     break;
-                case 4:
-                    System.out.println("生年月日を入力してください。例1993-08-19");
-                    String birth = new java.util.Scanner(System.in).nextLine();
-                    company.searchByBirth(birth,stmt);
+                case "4":
+                    exit = true;
+                    company.searchByBirth(inputBirth(),stmt);
                     break;
-                case 5:
-                    System.out.println("役職を入力してください。");
-                    String position = new java.util.Scanner(System.in).nextLine();
-                    company.searchByPosition(position,stmt);
+                case "5":
+                    exit = true;
+                    company.searchByPosition(inputPosition(),stmt);
                     break;
-                case 6:
-                    System.out.println("所属入力してください。");
-                    String assignment = new java.util.Scanner(System.in).nextLine();
-                    company.searchByAssignment(assignment,stmt);
+                case "6":
+                    exit = true;
+                    company.searchByAssignment(inputAssignment(),stmt);
                     break;
-                case 7:
-                    System.out.println("勤務年数を入力してください。");
-                    int yearsWorked = new java.util.Scanner(System.in).nextInt();
-                    company.searchByYearsWorked(yearsWorked,stmt);
+                case "7":
+                    exit = true;
+                    company.searchByYearsWorked(inputYearsWorked(),stmt);
                     break;
-                case 8:
-                    System.out.println("資格を入力してください。");
-                    String certificate = new java.util.Scanner(System.in).nextLine();
-                    company.searchByCertificate(certificate,stmt);
+                case "8":
+                    exit = true;
+                    company.searchByCertificate(inputCertificate(),stmt);
                     break;
-                case 9:
-                    System.out.println("賞罰を入力してください。");
-                    String awardsPunishments = new java.util.Scanner(System.in).nextLine();
-                    company.searchByAwardsPunishments(awardsPunishments,stmt);
+                case "9":
+                    exit = true;
+                    company.searchByAwardsPunishments(inputAwardsPunishments(),stmt);
                     break;
-                case 10:
-                    System.out.println("プログラミング言語を入力してください。");
-                    String programmingLanguage = new java.util.Scanner(System.in).nextLine();
-                    company.searchByProgrammingLanguage(programmingLanguage,stmt);
+                case "10":
+                    exit = true;
+                    company.searchByProgrammingLanguage(inputProgrammingLanguage(),stmt);
                     break;
-                case 11:
+                case "11":
+                    exit = true;
                     exid = 1;
                     break;
+            }
+            if(exit == false){
+                System.out.println("選択された項目がありません");
             }
         }while(exid != 1);
 		logger.exiting(LogUtil.getClassName(),LogUtil.getMethodName());

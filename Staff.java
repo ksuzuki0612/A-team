@@ -20,8 +20,8 @@ public class Staff {
     * Staffコンストラクタの生成
     */
     public Staff(int emp_id,String emp_name,char emp_gender,Date birth,String position,String assignment,
-    int yearsWorked,String certificate1,String certificate2,String certificate3,String awardsPunishments1,
-    String awardsPunishments2,String awardsPunishments3,String programmingLanguage){
+      int yearsWorked,String certificate1,String certificate2,String certificate3,String awardsPunishments1,
+      String awardsPunishments2,String awardsPunishments3,String programmingLanguage){
         this.emp_id = emp_id;
         this.emp_name = emp_name;
         this.emp_gender = emp_gender;
